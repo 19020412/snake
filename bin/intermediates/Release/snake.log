@@ -1,0 +1,12 @@
+﻿  Main.cpp
+D:\dev\snake\snake\src\Main.cpp(404,47): warning C4305: 'argument': truncation from 'int' to 'Uint8'
+D:\dev\snake\snake\src\Main.cpp(404,44): warning C4309: 'argument': truncation of constant value
+D:\dev\snake\snake\src\Main.cpp(405,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\dev\snake\snake\src\Main.cpp(449,41): warning C4244: '+=': conversion from 'double' to 'Uint32', possible loss of data
+D:\dev\snake\snake\src\Main.cpp(783,81): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+D:\dev\snake\snake\src\Main.cpp(798,22): warning C4244: '=': conversion from 'double' to 'Uint32', possible loss of data
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 242 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  snake.vcxproj -> D:\dev\snake\bin\Release\snake.exe
