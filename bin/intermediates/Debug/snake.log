@@ -1,8 +1,8 @@
 ﻿  Main.cpp
-D:\dev\snake\snake\src\Main.cpp(404,47): warning C4305: 'argument': truncation from 'int' to 'Uint8'
-D:\dev\snake\snake\src\Main.cpp(404,44): warning C4309: 'argument': truncation of constant value
-D:\dev\snake\snake\src\Main.cpp(405,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\dev\snake\snake\src\Main.cpp(449,41): warning C4244: '+=': conversion from 'double' to 'Uint32', possible loss of data
-D:\dev\snake\snake\src\Main.cpp(783,81): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-D:\dev\snake\snake\src\Main.cpp(798,22): warning C4244: '=': conversion from 'double' to 'Uint32', possible loss of data
+D:\dev\snake\snake\src\Main.cpp(408,47): warning C4305: 'argument': truncation from 'int' to 'Uint8'
+D:\dev\snake\snake\src\Main.cpp(408,44): warning C4309: 'argument': truncation of constant value
+D:\dev\snake\snake\src\Main.cpp(409,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\dev\snake\snake\src\Main.cpp(452,41): warning C4244: '+=': conversion from 'double' to 'Uint32', possible loss of data
+D:\dev\snake\snake\src\Main.cpp(786,89): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+D:\dev\snake\snake\src\Main.cpp(801,22): warning C4244: '=': conversion from 'double' to 'Uint32', possible loss of data
   snake.vcxproj -> D:\dev\snake\bin\Debug\snake.exe

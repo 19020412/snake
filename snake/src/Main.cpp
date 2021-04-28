@@ -178,6 +178,10 @@ void EatFood();
 
 void DerenderPauseScreen(); 
 
+void CreateCustomBlock(int i, int color[]);
+
+void Kill();
+
 int main(int arg, char* args[])
 {
 	Start();
@@ -251,10 +255,8 @@ Block MoveHead()
 	snake.head_x = (GAME_WIDTH + snake.head_x) % GAME_WIDTH;
 	snake.head_y = (GAME_HEIGHGT + snake.head_y) % GAME_HEIGHGT;
 
-	//index of old/new head coordinate
 	int old_idx = idx(old_x, old_y);
 	int next_idx = idx(snake.head_x, snake.head_y);
-
 	d_block = gameboard.type[next_idx];
 	gameboard.type[old_idx] = BODY_BLOCK;
 	gameboard.type[next_idx] = HEAD_BLOCK;
@@ -329,13 +331,13 @@ SDL_Texture* CreateBlockTexture(Block type)
 		color_code = SDL_MapRGBA(s->format, 0, 255, 0, 255);
 		break;
 	case BRICK_BLOCK:
-		color_code = SDL_MapRGBA(s->format, 255, 255, 255, 255);
+		color_code = SDL_MapRGBA(s->format, 255, 0, 255, 255);
 		break;
 	case BODY_BLOCK:
 		color_code = SDL_MapRGBA(s->format, 255, 255, 255, 255);
 		break;
 	case HEAD_BLOCK:
-		color_code = SDL_MapRGBA(s->format, 0, 0, 255, 255);
+		color_code = SDL_MapRGBA(s->format, 255, 255, 0, 255);
 		break;
 	}
 	SDL_FillRect(s, rect, color_code);
@@ -373,6 +375,8 @@ void NewGame()
 	gState.Reset();
 	for (int i = 0; i < GAME_WIDTH * GAME_HEIGHGT; i++)
 		gameboard.type[i] = EMPTY_BLOCK;
+	int color[] = { 255, 255, 0, 255 };
+	CreateCustomBlock(HEAD_BLOCK, color);
 
 	//create snake
 	snake.dir = DOWN;
@@ -416,12 +420,11 @@ void Update()
 		break;
 
 	case BODY_BLOCK:
-		PullBody(1);
-		snake.killed = true;
+		Kill();
 		break;
 	case BRICK_BLOCK:
 		PullBody(1);
-		snake.killed = true;
+		Kill();
 		break;
 	case FOOD_BLOCK:
 		EatFood();
@@ -747,7 +750,7 @@ int CreateBrick()
 {
 	int n;
 	{
-		int dice[] = { 18 ,4, 3, 2 };
+		int dice[] = { 18 ,9, 5, 3 };
 		n = RDice(4, dice);
 	}
 	int  count = 0;
@@ -757,7 +760,7 @@ int CreateBrick()
 		int xy[2] = { 0, 0 };
 		for (int i = 0; i < 2; i++)
 		{
-			int dice[] = { 5, 2, 1 , 1, 2, 5 };
+			int dice[] = { 4, 2, 1 , 1, 2, 4 };
 			int s[] = { 2, 4, 9, 9, 4, 2 };
 			int p = RDice(6, dice);
 			for (int t = 0; t < p; t++)
@@ -780,7 +783,7 @@ int CreateBrick()
 
 void EatFood()
 {
-	gState.score += gState.speed * (snake.length + gState.brick_count) / GAME_SPEED;
+	gState.score += gState.speed * (snake.length + 3 * gState.brick_count / 2) / GAME_SPEED;
 	gState.speed++;
 	snake.length;
 	gState.brick_count += CreateBrick();
@@ -853,4 +856,37 @@ void GameTexture::free()
 GameTexture::~GameTexture()
 {
 	free();
+}
+
+void CreateCustomBlock(int i, int color[])
+{
+	block_tex[i].free();
+
+	//create drawing surface
+	SDL_Rect* rect = new SDL_Rect{
+		0,
+		0,
+		BLOCK_SIZE,
+		BLOCK_SIZE };
+	block_tex[i].surface = SDL_CreateRGBSurface(0, BLOCK_SIZE, BLOCK_SIZE, 32,
+		0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
+	SDL_Surface* s = block_tex[i].surface;
+
+	//draw 
+	Uint32 color_code = SDL_MapRGBA(s->format, color[0], color[1], color[2], color[3]);
+	SDL_FillRect(s, rect, color_code);
+
+	//create texture
+	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, s);
+	block_tex[i].texture = tex;
+	block_tex[i].rect = rect;
+}
+
+void Kill()
+{
+	snake.killed = true;
+	int color[] = { 255, 0, 0, 255 };
+	CreateCustomBlock(HEAD_BLOCK, color);
+	BoardRender();
+	SDL_RenderPresent(renderer);
 }
